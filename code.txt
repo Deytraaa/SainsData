@@ -1,0 +1,196 @@
+#1
+from IPython import get_ipython
+from IPython.display import display
+import pandas as pd
+import matplotlib.pyplot as plt
+
+file_path = 'diabetes.csv'
+data = pd.read_csv('diabetes.csv')
+diabetes_data = data[data['Outcome'] == 1]
+
+rata_rata_usia = diabetes_data['Age'].mean()
+print(f"Rata-rata usia penderita diabetes: {rata_rata_usia:.2f} tahun")
+
+plt.figure(figsize=(10, 6))
+plt.hist(diabetes_data['Age'], bins=10, color='skyblue', edgecolor='black')
+plt.title('Distribusi Umur Penderita Diabetes (Histogram)')
+plt.xlabel('Umur')
+plt.ylabel('Jumlah Penderita')
+plt.grid(axis='y')
+plt.show()
+
+
+#2
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+file_path = 'diabetes.csv'
+data = pd.read_csv(file_path)
+
+correlation = data['Glucose'].corr(data['Outcome'])
+print(f"Korelasi antara glukosa dan diabetes: {correlation:.2f}")
+
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x=data['Glucose'], y=data['Outcome'], alpha=0.6)
+plt.title('Hubungan antara Kadar Glukosa dan Status Diabetes')
+plt.xlabel('Kadar Glukosa')
+plt.ylabel('Status Diabetes (0 = Tidak, 1 = Ya)')
+plt.grid(True)
+plt.show()
+
+#3
+import pandas as pd
+import matplotlib.pyplot as plt
+
+file_path = 'diabetes.csv' 
+data = pd.read_csv(file_path)
+pregnancy_counts = data[data['Outcome'] == 1]['Pregnancies'].value_counts().sort_index()
+max_pregnancy = pregnancy_counts.idxmax()
+max_count = pregnancy_counts.max()
+print(f"Jumlah kehamilan dengan penderita diabetes terbanyak: {max_pregnancy}")
+print(f"Jumlah penderita diabetes: {max_count}")
+
+plt.figure(figsize=(10, 6))
+pregnancy_counts.plot(kind='bar', color='lightcoral', edgecolor='black')
+plt.title('Jumlah Penderita Diabetes Berdasarkan Jumlah Kehamilan')
+plt.xlabel('Jumlah Kehamilan')
+plt.ylabel('Jumlah Penderita Diabetes')
+plt.grid(axis='y')
+plt.show()
+
+#4
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+file_path = 'diabetes.csv'
+data = pd.read_csv(file_path)
+correlation = data['BloodPressure'].corr(data['Outcome'])
+print(f"Korelasi antara tekanan darah dan diabetes: {correlation:.2f}")
+
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x=data['BloodPressure'], y=data['Outcome'], hue=data['Outcome'], palette=['blue', 'red'], alpha=0.6)
+plt.title('Hubungan antara Tekanan Darah dan Status Diabetes')
+plt.xlabel('Tekanan Darah')
+plt.ylabel('Status Diabetes (0 = Tidak, 1 = Ya)')
+plt.grid(True)
+plt.show()
+
+#5
+import pandas as pd
+import matplotlib.pyplot as plt
+
+file_path = 'diabetes.csv'  
+data = pd.read_csv(file_path)
+skin_thickness_zero = data[(data['SkinThickness'] == 0) & (data['Outcome'] == 1)].shape[0]
+total_diabetes = data[data['Outcome'] == 1].shape[0]
+percentage_skin_thickness_zero = (skin_thickness_zero / total_diabetes) * 100 if total_diabetes > 0 else 0
+print(f"Persentase penderita diabetes dengan SkinThickness = 0: {percentage_skin_thickness_zero:.2f}%")
+
+plt.figure(figsize=(8, 8))
+labels = ['SkinThickness = 0', 'SkinThickness > 0']
+sizes = [skin_thickness_zero, total_diabetes - skin_thickness_zero]
+colors = ['lightcoral', 'lightblue']
+plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=colors)
+plt.title('Distribusi Penderita Diabetes Berdasarkan Skin Thickness')
+plt.axis('equal') 
+plt.show()
+
+#6
+import pandas as pd
+import matplotlib.pyplot as plt
+
+file_path = 'diabetes.csv' 
+data = pd.read_csv(file_path)
+diabetes_data = data[data['Outcome'] == 1]
+
+plt.figure(figsize=(10, 6))
+plt.hist(diabetes_data['Insulin'], bins=10, color='skyblue', edgecolor='black')
+plt.title('Distribusi Kadar Insulin pada Penderita Diabetes')
+plt.xlabel('Kadar Insulin')
+plt.ylabel('Jumlah Penderita')
+plt.grid(axis='y')
+plt.show()
+
+#7
+import pandas as pd
+import matplotlib.pyplot as plt
+
+file_path = 'diabetes.csv' 
+data = pd.read_csv(file_path)
+average_bmi = data.groupby('Outcome')['BMI'].mean()
+
+plt.figure(figsize=(8, 5))
+average_bmi.plot(kind='bar', color=['lightblue', 'lightcoral'], edgecolor='black')
+plt.title('Rata-rata BMI Berdasarkan Status Diabetes')
+plt.xlabel('Status Diabetes (0 = Tidak, 1 = Ya)')
+plt.ylabel('Rata-rata BMI')
+plt.xticks(rotation=0)
+plt.grid(axis='y')
+plt.show()
+
+#8
+import pandas as pd
+import matplotlib.pyplot as plt
+
+file_path = 'diabetes.csv' 
+data = pd.read_csv(file_path)
+diabetes_data = data[data['Outcome'] == 1]
+min_glucose = diabetes_data['Glucose'].min()
+print(f"Nilai glukosa terendah pada penderita diabetes: {min_glucose}")
+plt.figure(figsize=(10, 6))
+plt.hist(diabetes_data['Glucose'], bins=10, color='skyblue', edgecolor='black')
+plt.title('Distribusi Kadar Glukosa pada Penderita Diabetes')
+plt.xlabel('Kadar Glukosa')
+plt.ylabel('Jumlah Penderita')
+plt.axvline(x=min_glucose, color='red', linestyle='--', label=f'Glukosa terendah: {min_glucose}')
+plt.legend()
+plt.grid(axis='y')
+plt.show()
+
+#9
+import pandas as pd
+import matplotlib.pyplot as plt
+
+file_path = 'diabetes.csv' 
+data = pd.read_csv(file_path)
+diabetes_data = data[data['Outcome'] == 1]
+youngest_age = diabetes_data['Age'].min()
+count_youngest = diabetes_data[diabetes_data['Age'] == youngest_age].shape[0]
+print(f"Umur termuda yang terjangkit diabetes: {youngest_age} tahun")
+print(f"Jumlah penderita diabetes dengan umur termuda: {count_youngest} orang")
+plt.figure(figsize=(10, 6))
+plt.hist(diabetes_data['Age'], bins=10, color='skyblue', edgecolor='black')
+plt.title('Distribusi Umur Penderita Diabetes')
+plt.xlabel('Umur')
+plt.ylabel('Jumlah Penderita')
+plt.axvline(x=youngest_age, color='red', linestyle='--', label=f'Umur termuda: {youngest_age}')
+plt.legend()
+plt.grid(axis='y')
+plt.show()
+
+#10
+import pandas as pd
+import matplotlib.pyplot as plt
+
+file_path = 'diabetes.csv' 
+data = pd.read_csv(file_path)
+count_diabetes = data[data['Outcome'] == 1].shape[0]
+count_non_diabetes = data[data['Outcome'] == 0].shape[0]
+total_cases = count_diabetes + count_non_diabetes
+
+percentage_diabetes = (count_diabetes / total_cases) * 100
+percentage_non_diabetes = (count_non_diabetes / total_cases) * 100
+print(f"Jumlah kasus diabetes: {count_diabetes}")
+print(f"Jumlah kasus tidak diabetes: {count_non_diabetes}")
+print(f"Presentase kasus diabetes: {percentage_diabetes:.2f}%")
+print(f"Presentase kasus tidak diabetes: {percentage_non_diabetes:.2f}%")
+plt.figure(figsize=(7, 7))
+sizes = [count_diabetes, count_non_diabetes]
+labels = ['Diabetes', 'Tidak Diabetes']
+colors = ['lightcoral', 'lightblue']
+plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=colors)
+plt.title('Distribusi Kasus Diabetes')
+plt.axis('equal') 
+plt.show()
